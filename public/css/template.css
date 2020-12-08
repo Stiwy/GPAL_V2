@@ -1,0 +1,23 @@
+/* header */
+#navbar {
+    background-color: #01abd4;
+}
+
+#nav {
+    margin-left: -40px;
+    background-color: #ededed;
+    list-style: none;
+    margin: unset;
+    border-bottom: solid 1px #01abd4;
+    text-align: center;
+}
+
+#nav > li > a{
+    color: #01abd4;
+}
+
+#return {
+    border: unset;
+    color: #01abd4;
+}
+/* header */

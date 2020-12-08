@@ -1,0 +1,5 @@
+@media screen and (max-width : 575.98px) {
+    #thead, #tbody {
+        font-size: 0.8em;
+    }
+}
