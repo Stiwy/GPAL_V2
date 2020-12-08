@@ -1,3 +1,4 @@
+<?php unset($_SESSION['search']) ?>
 <?php $listpalettes = Palettes::listPalettesByUser();?>
 <section class="container-fluid">
     

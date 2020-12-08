@@ -20,19 +20,26 @@ class Palettes extends PaletteManager
 		if (isset($_POST['new_quantity']) && $_POST['new_quantity'] >= 0 && is_numeric($_POST['new_quantity'])) {
             $newQuantity = App::secureInput($_POST['new_quantity']);
 
+            $info = $palette['quantity'] . " => " . $newQuantity;
+            
+            $action = ($newQuantity < $palette['quantity']) ? "Retrait" : "Ajouts";
+
 			if ($newQuantity == 0) { // If the new quantity = 0 then delete the palette
 
                 self::deletePalette($id);
                 
-				$referer = header('Location: index.php');
+                $referer = header('Location: index.php');
+                
+                $info = $palette['reference'] . " A" . $palette['weg'] . " R" . $palette['shelf'];
+
+                $action ="Suppression";
 
 			}else {
                 self::updatePalette($id, $newQuantity, $palette['shelf'], $palette['weg']);
 
 				$referer = header('Location:' . $_SERVER['HTTP_REFERER']);
             }
-            $action = ($newQuantity < $palette['quantity']) ? "Retrait" : "Ajouts";
-            LogManager::addLog($_SESSION['auth']['id'], $palette['id'], $action, $palette['quantity'] . " => " . $newQuantity);
+            LogManager::addLog($_SESSION['auth']['id'], $palette['id'], $action, $info);
             
             $_SESSION['flash']['success'] = "<span>La quantité à bien été mis à jour !</span>";
             $referer;

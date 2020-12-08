@@ -6,6 +6,20 @@ class UserManager extends Manager
 {
     private static $getUsers;
 
+    protected static function fetchId($id)
+    {
+        $req = self::dbConnect()->prepare('SELECT * FROM warehouseman WHERE id = ?');
+        $req->execute(array($id));
+
+        return $req->fetch(PDO::FETCH_ASSOC);
+    }
+
+    protected static function delUser($id)
+    {
+        $req = self::dbConnect()->prepare('DELETE FROM warehouseman WHERE id = ?'); 
+        $req->execute(array($id));
+    }
+
     protected static function fetch($username)
     {
         $req = self::dbConnect()->prepare('SELECT * FROM warehouseman WHERE username = ?');

@@ -23,7 +23,7 @@
         </div>
         <div class="col-6 col-md-4">
             <h6 class="text-primary">Action</h6>
-            <button class="btn btn-danger btn-sm">Supprimer</button>
+            <button class="btn btn-danger btn-sm" onclick="delUser(<?= $_GET['iduser']?>)">Supprimer</button>
         </div>
     </div>
 

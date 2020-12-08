@@ -4,6 +4,13 @@ require 'db/UserManager.php';
 class Users extends UserManager 
 {
 
+    public static function delete()
+    {
+        self::delUser($_GET['iduser']);
+        $_SESSION['flash']['success'] = 'Le compte à était supprimer !';
+        header('Location: index.php?action');
+    }
+
     public static function register()
     {
         App::sessionFlash();
@@ -45,9 +52,7 @@ class Users extends UserManager
 
             self::add($id, $username, $passwordHash, $admin);
             LogManager::addLog($id, 0, 'Nouveau', ' compte');
-
-            $_SESSION['flash']['success'] = 'Nouveau compte ajouté !';
-            $_SESSION['flash']['info'] = 'Identifiant = ' . $username . ' Mot de Passe = ' . $password;
+            $_SESSION['flash']['info'] = ' Identifiant = ' . $username . ' Mot de Passe = ' . $password;
         }else {
             $_SESSION['flash']['danger'] = $error;
         }
@@ -88,7 +93,7 @@ class Users extends UserManager
 
             $cookie_name = "PHPUSERID";
             $cookie_value = $user['id'] . "---" . sha1($user['username'] . $user['password'] . $user['admin']);
-            setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/", "bor.santedistri.com", false, true);
+            setcookie($cookie_name, $cookie_value, time() + (3600 * 24), "/", "bor.santedistri.com", false, true);
 
             $_SESSION['auth'] = $user;
 
@@ -106,7 +111,7 @@ class Users extends UserManager
         
         App::sessionFlash();
         
-        // setcookie('PHPUSERID', '', time() - 4200, '/', "bor.santedistri.com", false, true);
+        setcookie('PHPUSERID', '', time() - 4200, '/', "bor.santedistri.com", false, true);
         unset($_SESSION['auth']);
 
         $_SESSION['flash']['success'] = "Vous avez bien était déconnecté.";
@@ -118,7 +123,11 @@ class Users extends UserManager
         App::sessionFlash();
         $result = array();
         if ($list === "admin"){
-            $result = self::getUsers();
+            foreach(self::getUsers() as $user){
+                if($user['admin'] == "1") {
+                    array_push($result, $user);
+                }
+            }
         }else {
             foreach(self::getUsers() as $user){
                 if($user['admin'] == "0") {
@@ -139,5 +148,18 @@ class Users extends UserManager
     {
         $date = date('Y-m-d');
         return self::countModif($id, $date);
+    }
+
+    public static function loginByCookieMember()
+    {
+        
+        $auth = $_COOKIE['PHPUSERID'];
+        $auth = explode("---", $auth);
+        
+        $user = self::fetchId($auth['0']);
+        $key = sha1($user['username'] . $user['password']);
+        if ($key == $auth[1]) { // Verify if the $key is identiqual as key $auth[1]
+            $_SESSION['auth'] = $user;
+        }
     }
 }

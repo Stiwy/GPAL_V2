@@ -136,8 +136,6 @@
     </div>
     </div>
 
-    <?php App::flash() ?>
-
     <?= $content ?>
 
     <!-- JS -->

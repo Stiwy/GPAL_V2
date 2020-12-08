@@ -1,7 +1,14 @@
-
+<?php unset($_SESSION['search']) ?>
 <section>
+
+  <h1 class="h3 mb-3 font-weight-normal text-center my-4 text-primary">Espace d'administration</h1> 
+
+  
   <!-- Button trigger modal -->
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addMember">Ajouter un membre</button>
+  <div class="row">
+    <button type="button" class="btn btn-sm btn-primary offset-9" data-toggle="modal" data-target="#addMember">Ajouter</button>
+  </div>
+  
 
   <!-- Modal -->
   <div class="modal fade" id="addMember" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -49,21 +56,41 @@
       </div>
     </div>
   </div>
-  
+  <p class="h5 font-weight-italic text-secondary border border-top">Vue global des Utilisateurs</p>
+  <table id="table" class="table text-center mb-5">
+    <thead id="thead">
+        <tr>
+            <th>Nom</th>
+            <th>Connexion</th>
+            <th>Modification</th>
+        </tr>
+    </thead>
+    <tbody id='tbody'>
+      <?php foreach(Users::listUsers() as $user) : ?>
+        <tr  <?= (Users::countLog($user['id']) == 0 &&  $user['username'] != "Bureau") ? 'class="font-weight-bold text-danger"': ''; ?> onclick="getUser(<?= $user['id'] ?>)">
+          <td><?= $user['username'] ?></td>
+          <td><?= $user['last_login_date'] ?></td>
+          <td><?= Users::countLog($user['id']) ?></td> 
+        </tr>
+      <?php endforeach; ?>
+    </tbody>
+</table>
+
+  <p class="h5 font-weight-italic text-secondary border border-top">Vue global des Admin </p>
   <table id="table" class="table text-center">
-            <thead id="thead">
+            <thead id="thead" class="bg-danger">
                 <tr>
                     <th>Nom</th>
                     <th>Connexion</th>
                     <th>Modification</th>
                 </tr>
             </thead>
-            <tbody id="tbody"
-              <?php foreach(Users::listUsers() as $user) : ?>
-                <tr  <?= (Users::countLog($user['id']) == 0 &&  $user['username'] != "Bureau") ? 'class="font-weight-bold text-danger"': ''; ?> onclick="getUser(<?= $user['id'] ?>)">
-                  <td><?= $user['username'] ?></td>
-                  <td><?= $user['last_login_date'] ?></td>
-                  <td><?= Users::countLog($user['id']) ?></td> 
+            <tbody id='tbody'>
+              <?php foreach(Users::listUsers('admin') as $admin) : ?>
+                <tr  onclick="getUser(<?= $admin['id'] ?>)">
+                  <td><?= $admin['username'] ?></td>
+                  <td><?= $admin['last_login_date'] ?></td>
+                  <td><?= Users::countLog($admin['id']) ?></td> 
                 </tr>
               <?php endforeach; ?>
             </tbody>

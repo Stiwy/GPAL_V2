@@ -2,6 +2,43 @@
 
 class App 
 {
+
+
+    public static function getAlert()
+    {
+        if(isset($_SESSION['flash'])) :
+            foreach($_SESSION['flash'] as $type => $message) : 
+        
+                if ($type ===  'warning') {
+                    $messageType = 'Attention !';
+                }elseif ($type ===  'danger') {
+                    $messageType = 'Erreur !';
+                }elseif ($type ===  'success') {
+                    $messageType = 'Succès !';
+                }elseif ($type ===  'info') {
+                    $messageType = 'Info :';
+                } 
+                
+                ob_start();?>
+                <div class="alert alert-<?= $type ?> alert-dismissible fade show" role="alert">
+                    <strong><?= $messageType ?></strong> <?= $message ?>
+                    <button type="button" onclick="session()" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            <?php
+            $alert = ob_get_clean();
+             endforeach ; 
+        endif;
+        self::unsetAlert();
+        return $alert;
+    }
+
+    public static function unsetAlert()
+    {
+        unset($_SESSION['flash']);
+    }
+
     public static function return() 
     {
         header('Location: index.php?action=search');
@@ -30,11 +67,12 @@ class App
         
                 <div class="alert alert-<?= $type ?> alert-dismissible fade show" role="alert">
                     <strong><?= $messageType ?></strong> <?= $message ?>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <button type="button" onclick="session()" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
             <?php endforeach ; 
+            unset($_SESSION['flash']);
         endif;
     }
 
