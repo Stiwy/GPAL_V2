@@ -16,11 +16,9 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="public/css/core/table.css">
-    
-    <link rel="stylesheet" type="text/css" href="public/css/addPalette.css">
+
     <link rel="stylesheet" type="text/css" href="public/css/getPaletteById.css">
     <link rel="stylesheet" type="text/css" href="public/css/login.css">
-    <link rel="stylesheet" type="text/css" href="public/css/paletteManager.css">
     <link rel="stylesheet" type="text/css" href="public/css/template.css">
 </head>
 <body>
@@ -76,6 +74,7 @@
                         <div class="col-6">
                             <label for="weg">Allée</label><br>
                             <select name="weg" id="weg" class="form-control" onclick="getValueSelctWeg()">
+                                <option>A<?= (isset($_SESSION['input']['reference'])) ? $_SESSION['input']['weg'] : '1'; ?></option>
                                 <option>A1</option>
                                 <option>A2</option>
                                 <option>A3</option>
@@ -95,6 +94,7 @@
                         <div class="col-6">
                             <label for="shelf">Rayon</label><br>
                             <select name="shelf" id="shelf" class="form-control" onclick="getValueSelctWeg()">
+                                <option>R<?= (isset($_SESSION['input']['reference'])) ? $_SESSION['input']['shelf'] : '2'; ?></option>
                                 <option>R1</option>
                                 <option>R2</option>
                                 <option>R3</option>
@@ -136,6 +136,8 @@
     </div>
     </div>
 
+    <?php App::flash(); ?>
+    
     <?= $content ?>
 
     <!-- JS -->

@@ -6,6 +6,7 @@ class Users extends UserManager
 
     public static function delete()
     {
+        App::sessionFlash();
         self::delUser($_GET['iduser']);
         $_SESSION['flash']['success'] = 'Le compte à était supprimer !';
         header('Location: index.php?action');
@@ -14,7 +15,6 @@ class Users extends UserManager
     public static function register()
     {
         App::sessionFlash();
-
         $error= '';
         $count = 0;
 
@@ -75,6 +75,7 @@ class Users extends UserManager
             $error .= '<span>Veuillez saisir votre mot de passe !</span></br>';
         }else {
             $userPassowrd = App::secureInput($_POST['userPassword']);
+            $userPassowrd = ucfirst(strtolower($userPassowrd));
         }
 
         $user = self::fetch($username);
@@ -108,9 +109,7 @@ class Users extends UserManager
 
     public static function logout()
     {
-        
         App::sessionFlash();
-        
         setcookie('PHPUSERID', '', time() - 4200, '/', "bor.santedistri.com", false, true);
         unset($_SESSION['auth']);
 
@@ -120,7 +119,6 @@ class Users extends UserManager
 
     public static function listUsers($list = "")
     {
-        App::sessionFlash();
         $result = array();
         if ($list === "admin"){
             foreach(self::getUsers() as $user){

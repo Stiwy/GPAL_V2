@@ -1,9 +1,9 @@
 function getPalette ($id) {
-    document.location.href="http://bor.santedistri.com/gpal-dev/index.php?action=getpalette&idpalette=".concat($id);
+    document.location.href="http://bor.santedistri.com/gpal/index.php?action=getpalette&idpalette=".concat($id);
 }
 
 function getUser ($id) {
-    document.location.href="http://bor.santedistri.com/gpal-dev/index.php?action=getuser&iduser=".concat($id);
+    document.location.href="http://bor.santedistri.com/gpal/index.php?action=getuser&iduser=".concat($id);
 }
 
 function index() {
@@ -12,17 +12,17 @@ function index() {
 	if (name == 'getpalette') {
 		if (document.getElementById('gpbi_move_palette_section').classList.contains('d-block')) {
 			if (confirm("Souhaitez-vous retourner à l'accueil sans valider les modifications en cours ?")) {
-				document.location.href="http://bor.santedistri.com/gpal-dev/index.php";
+				document.location.href="http://bor.santedistri.com/gpal/index.php";
 			}
 		}else if (document.getElementById('gpbi_update_quantity_section').classList.contains('d-block')) {
 			if (confirm("Souhaitez-vous retourner à l'accueil sans valider les modifications en cours ?")) {
-				document.location.href="http://bor.santedistri.com/gpal-dev/index.php";
+				document.location.href="http://bor.santedistri.com/gpal/index.php";
 			}
 		}else {
-			document.location.href="http://bor.santedistri.com/gpal-dev/index.php";
+			document.location.href="http://bor.santedistri.com/gpal/index.php";
 		}
 	}else {
-		document.location.href="http://bor.santedistri.com/gpal-dev/index.php";
+		document.location.href="http://bor.santedistri.com/gpal/index.php";
 	}
 }
 
@@ -32,22 +32,22 @@ function returnIndex() {
 	if (name == 'getpalette') {
 		if (document.getElementById('gpbi_move_palette_section').classList.contains('d-block')) {
 			if (confirm("Souhaitez-vous retourner à l'accueil sans valider les modifications en cours ?")) {
-				document.location.href="http://bor.santedistri.com/gpal-dev/return.php";
+				document.location.href="http://bor.santedistri.com/gpal/return.php";
 			}
 		}else if (document.getElementById('gpbi_update_quantity_section').classList.contains('d-block')) {
 			if (confirm("Souhaitez-vous retourner à l'accueil sans valider les modifications en cours ?")) {
-				document.location.href="http://bor.santedistri.com/gpal-dev/return.php";
+				document.location.href="http://bor.santedistri.com/gpal/return.php";
 			}
 		}else {
-			document.location.href="http://bor.santedistri.com/gpal-dev/return.php";
+			document.location.href="http://bor.santedistri.com/gpal/return.php";
 		}	
 	}else {
-		document.location.href="http://bor.santedistri.com/gpal-dev/index.php";
+		document.location.href="http://bor.santedistri.com/gpal/index.php";
 	}
 }
 
 function indexAdd() {
-	document.location.href="http://bor.santedistri.com/gpal-dev/index.php";
+	document.location.href="http://bor.santedistri.com/gpal/index.php";
 }
 
 function buttonMovePalette(){
@@ -84,12 +84,12 @@ function buttonUpdateQuantity(){
 }
 
 function buttonAdd(){
-	document.location.href = "http://bor.santedistri.com/gpal-dev/index.php?action=addpalette";
+	document.location.href = "http://bor.santedistri.com/gpal/index.php?action=addpalette";
 }
 
 function buttonLogout() {
 	if(confirm('Souhaitez-vous vous déconnecter ?')) {
-		document.location.href = "http://bor.santedistri.com/gpal-dev/index.php?action=logout";
+		document.location.href = "http://bor.santedistri.com/gpal/index.php?action=logout";
 	}
 }
 
@@ -133,6 +133,6 @@ function isAdmin()
 function delUser($id) 
 {
 	if (confirm('Voulez-vous vraiment supprimer cet utilisateur')) {
-		document.location.href="http://bor.santedistri.com/gpal-dev/index.php?action=deluser&iduser=".concat($id);
+		document.location.href="http://bor.santedistri.com/gpal/index.php?action=deluser&iduser=".concat($id);
 	}
 }

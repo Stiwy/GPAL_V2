@@ -67,7 +67,7 @@
     </thead>
     <tbody id='tbody'>
       <?php foreach(Users::listUsers() as $user) : ?>
-        <tr  <?= (Users::countLog($user['id']) == 0 &&  $user['username'] != "Bureau") ? 'class="font-weight-bold text-danger"': ''; ?> onclick="getUser(<?= $user['id'] ?>)">
+        <tr  <?= (Users::countLog($user['id']) <= 1 &&  $user['username'] != "Bureau") ? 'class="font-weight-bold text-danger"': ''; ?> onclick="getUser(<?= $user['id'] ?>)">
           <td><?= $user['username'] ?></td>
           <td><?= $user['last_login_date'] ?></td>
           <td><?= Users::countLog($user['id']) ?></td> 

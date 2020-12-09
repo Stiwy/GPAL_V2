@@ -3,3 +3,14 @@
         font-size: 0.8em;
     }
 }
+
+#thead {
+    background:  #01abd4;
+    color :white;
+}
+
+#table >tbody > tr:hover {
+    background:  #86d4e7;
+    color :white;
+    cursor: pointer;
+}

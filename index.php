@@ -19,42 +19,31 @@ if (isset($_SESSION["auth"])) {
 	switch ($_GET["action"]) {
 
 		case 'addreference':
-			print_r(App::getAlert()) ;
 			Palettes::newReference();
 		break;
 
 		case "addpalette":
-			print_r(App::getAlert()) ;
 			Palettes::newPalette();
 		break;
 
 		case "updatequantity":
-			print_r(App::getAlert()) ;
 			Palettes::updateQuantity();
 		break;
 
 		case "movepalette";
-			print_r(App::getAlert()) ;
 			Palettes::movePalettes();
 		break;
 
 		case "getpalette";
-			print_r(App::getAlert()) ;
 			$getPaletteById = Palettes::getPalette();
 			require 'view/client/detailsPalette.php';
 		break;
 
-		case "return":
-			App::return();
-		break;
-
 		case "search":
-			print_r(App::getAlert()) ;
 			require 'view/client/listPalettes.php';
 		break;
 
 		case "adduser":
-			print_r(App::getAlert()) ;
             if ($_SESSION['auth']['admin'] == 1) {
 				Users::register();
 			}else {
@@ -71,7 +60,6 @@ if (isset($_SESSION["auth"])) {
 		break;
 
 		case "getuser":
-			print_r(App::getAlert()) ;
 			if ($_SESSION['auth']['admin'] == 1) {
 				require 'view/secure/detailsUser.php';
 			}else {
@@ -84,7 +72,6 @@ if (isset($_SESSION["auth"])) {
 		break;
 
 		default:
-			print_r(App::getAlert()) ;
 
 			if ($_SESSION['auth']['admin'] == 1) {
 				require 'view/secure/home.php';
@@ -95,7 +82,6 @@ if (isset($_SESSION["auth"])) {
     }
     
 }else {
-	print_r(App::getAlert()) ;
 	if($_POST) {
 		Users::login();
 	}else {

@@ -7,6 +7,7 @@ class Palettes extends PaletteManager
     public static function updateQuantity() 
     {
         App::sessionFlash();
+        if (session_status() == PHP_SESSION_NONE){session_start();}
         $error = "";
 
         if (!isset($_GET['idpalette'])) {
@@ -27,8 +28,11 @@ class Palettes extends PaletteManager
 			if ($newQuantity == 0) { // If the new quantity = 0 then delete the palette
 
                 self::deletePalette($id);
-                
-                $referer = header('Location: index.php');
+                if (isset($_SESSION['search'])){
+                    $referer = header('Location: index.php?action=search');
+                }else {
+                    $referer = header('Location: index.php');
+                }
                 
                 $info = $palette['reference'] . " A" . $palette['weg'] . " R" . $palette['shelf'];
 
@@ -49,10 +53,10 @@ class Palettes extends PaletteManager
         }
 	}
 
-    public static function movePalettes() {
-
+    public static function movePalettes() 
+    {
         App::sessionFlash();
-
+        if (session_status() == PHP_SESSION_NONE){session_start();}
 		$error = "";
 
         if (!isset($_GET['idpalette'])) {
@@ -140,6 +144,7 @@ class Palettes extends PaletteManager
 
     public static function getPalette() 
     {
+        if (session_status() == PHP_SESSION_NONE){session_start();}
         if (!isset($_GET['idpalette'])) {
             $id = "0";
         }else {
@@ -151,7 +156,7 @@ class Palettes extends PaletteManager
 
     public static function listPalettes()
     {
-        App::sessionFlash();
+        if (session_status() == PHP_SESSION_NONE){session_start();}
         if (isset($_POST['search']) || !empty($_POST['search'])){
             $search = App::secureInput($_POST['search']);
         }elseif(isset($_SESSION['search'])) {
@@ -172,9 +177,10 @@ class Palettes extends PaletteManager
         return self::getPalettesByUser($_SESSION['auth']['id'], $today);
     }
 
-    public static function newPalette() {
-
+    public static function newPalette() 
+    {
         App::sessionFlash();
+        if (session_status() == PHP_SESSION_NONE){session_start();}
         unset($_SESSION['input']);
 
 		$error = "";
@@ -216,10 +222,9 @@ class Palettes extends PaletteManager
 
         if (self::getReference($reference) == false) {
             $error .= "<span>La référence n'est pas enregisté souhaité vous l'ajouter ?</br> <a href='index.php?action=addreference' class='p-2 h5 badge badge-success'>Oui</a> | <a href='#' class='p-2 h5 badge badge-danger'>Non</a></span></br>";
-            
-            $_SESSION['input'] = array('reference' => $reference, 'qunatité' => $quantity);
         }
 
+        $_SESSION['input'] = array('reference' => $reference, 'weg' => $new_weg, 'shelf' => $new_shelf, 'qunatité' => $quantity);
 	 	if ($error === "") {
 
 			$refExistAtTheLocation = self::refExistAtTheLocation($reference, $new_weg, $new_shelf);
@@ -232,7 +237,7 @@ class Palettes extends PaletteManager
                 self::updatePalette($id, $newQuantity, $refExistAtTheLocation['shelf'], $refExistAtTheLocation['weg']);
 
 			} else {
-				$id = self::addPalette($reference, $new_weg, $new_shelf, $quantity);
+                $id = self::addPalette($reference, $new_weg, $new_shelf, $quantity);
             }
 
             LogManager::addLog($_SESSION['auth']['id'], $id, 'Création', "A" . $new_weg . " | R" . $new_shelf);
@@ -246,6 +251,7 @@ class Palettes extends PaletteManager
     public static function newReference()
     {
         App::sessionFlash();
+        if (session_status() == PHP_SESSION_NONE){session_start();}
         self::addReference($_SESSION['input']['reference']);
         $_SESSION['flash']['success'] = '<span>Référence àjouté !</span>';
         header('Location:' . $_SERVER['HTTP_REFERER']);
